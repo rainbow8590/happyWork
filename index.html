@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>快乐沃克</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<link rel="stylesheet" href="css/index.css">
+	<link rel="stylesheet" href="css/swiper.min.css">
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script src="js/swiper.min.js"></script>
+
+</head>
+<body>
+	<div class="main" id="main">
+		<div class="load" id="load-ico"><img id="aa" src="images/load.png" alt=""></div>
+		<div class="page0" id="page0">
+	 		<img src="images/p0-1.png" alt="">
+	 		<img src="images/p0-txtbg.png" alt="">
+	 		<img src="images/p0-txt1.png" alt="">
+	 		<img src="images/p0-txt2.png" alt="">
+	 		<img src="images/p0-txt3.png" alt="">
+	 		<img src="images/p0-txt4.png" alt="">
+	 		<div class="touch" id="touch"></div>
+	    </div>
+		<div class="swiper-container">
+		    <div class="swiper-wrapper">
+		        <div class="swiper-slide page1" >
+		        	<img src="images/p1-logo.png" alt="">
+		        	<img src="images/p1-txt.png" alt="">
+		        	<img src="images/p1-tag1.png" alt="">
+		        	<img src="images/p1-tag2.png" alt="">
+		        	<img src="images/p1-tag3.png" alt="">
+		        	<img src="images/arrow.png" alt="">
+		        </div>
+		        <div class="swiper-slide page2">
+		        	<img src="images/p2-img1.png" alt="">
+		        	<img src="images/p2-img2.png" alt="">
+		        	<img src="images/p2-img3.png" alt="">
+		        	<img src="images/p2-arrow.png" alt="">
+		        </div>
+		        <div class="swiper-slide page3" >
+		        	<img src="images/p3-2.png" alt="">
+		        	<img src="images/p3-5.png" alt="">
+		        	<img src="images/p3-3.png" alt="">
+		        	<img src="images/p3-4.png" alt="">
+		        	<img src="images/p3-arrow.png" alt="">
+		        </div>
+		        <div class="swiper-slide page4">
+		        	<img src="images/p4-1.png" alt="">
+		        	<img src="images/p4-2.png" id="focus">
+		        	<div class="zoom" id="zoom"></div>
+		        </div>
+		    </div>
+		</div>
+		<div class="music" id="musicMenu">
+			<div class="music-bg" id="music-bg"></div>
+			<div class="music-ico" id="music-ico"></div>
+			<audio id="musicAudio" src="images/bg.mp3" loop preload="none"></audio>
+			<audio id="musicP" src="images/p.mp3"  preload="none"></audio>
+		</div>
+	</div>
+	<script>
+		// 预加载
+		;(function(){
+
+			var loadIco = document.getElementById('load-ico');
+			// var aa = document.getElementById('aa');
+			console.log(aa)
+			
+			// 需要预先加载的图片数组
+			var arr = [
+				'images/arrow.png',
+				'images/music.png',
+				'images/music_bg.gif',
+				'images/p1-bg.jpg',
+				'images/p1-tag1.png',
+				'images/p1-tag2.png',
+				'images/p1-tag3.png',
+				'images/p1-txt.png',
+				'images/p2-arrow.png',
+				'images/p2-img1.png',
+				'images/p2-img2.png',
+				'images/p2-img3.png',
+				'images/p2.jpg',
+				'images/p3.jpg',
+				'images/p3-1.png',
+				'images/p3-2.png',
+				'images/p3-3.png',
+				'images/p3-4.png',
+				'images/p3-5.png',
+				'images/p3-arrow.png',
+				'images/p4-1.png',
+				'images/p4-2.png',
+				'images/p4-3.png'
+			];
+
+			preloadImg(arr);
+
+			// 预加载函数
+			function preloadImg(arr){
+				var newimages=[];
+		        var imgcount = 0;
+		        var arr=(typeof arr!="object")? [arr] : arr;  // 确保参数总是数组
+		        for (var i=0; i<arr.length; i++){
+		            newimages[i] = new Image();
+		            newimages[i].src=arr[i];
+		            newimages[i].onload=function(){
+		                imgcount++;
+		                if(imgcount>=arr.length){
+		                    loadIco.style.display = 'none';
+		                    console.log(2222)
+		                }
+		            }
+		        }
+	        }
+		})();
+
+		/*解决手机屏幕不同font-size的大小的不同问题*/
+		;(function(){
+			var desw = 640;
+			var winw = document.documentElement.clientWidth;
+			var ratio = winw / desw;
+			var main = document.getElementById('main');
+			if(winw > desw){
+				main.style.width = desw + 'px';
+				main.style.margin = 0;
+				return;
+			}
+			document.documentElement.style.fontSize = ratio * 100 + 'px';
+		})();
+
+
+		/*初始化swiper*/
+		var mySwiper = new Swiper('.swiper-container', {
+			direction : 'vertical',
+			// loop:true,
+			onSlideChangeEnd:function(swiper){
+				console.log(1111)
+				var curIn = swiper.activeIndex;
+				var slideAry = swiper.slides;
+				var total = slideAry.length;
+				var targetId = 'page';
+				console.log(curIn)
+				
+				switch(curIn){
+					case 0:
+						targetId += 1;
+						break;
+					case 1:
+						targetId += 2;
+						break;
+					case 2:
+						targetId += 3;
+						break;
+					case 3:
+						targetId += 4;
+						break;
+					default:
+						
+				}
+				[].forEach.call(slideAry,function(item,index){
+					if(curIn == index){
+						item.id = targetId;
+						return;
+					}
+					item.id = null;
+				})
+				
+			}
+		})
+
+		/*music*/
+		function musicPlay(){
+			var musicMenu = document.getElementById('musicMenu');
+			var musicAudio = document.getElementById('musicAudio');
+			var musicBg = document.getElementById('music-bg');
+			var musicIco = document.getElementById('music-ico');
+			var focus = document.getElementById('focus');
+
+			musicMenu.addEventListener('click',function(){
+				// 暂停状态
+				if(musicAudio.paused){
+					musicAudio.play();
+					musicIco.style.display = "block";
+					musicBg.className = 'music-bg rotate';
+					return;
+				}
+				// 播放状态
+				musicAudio.pause();
+				musicIco.style.display = "none";
+				musicBg.className = 'music-bg';
+			},false)
+
+			function controlMusic(){
+				// 设置音量
+				musicAudio.volume = 0.05;
+				musicAudio.play();
+				musicAudio.addEventListener('canplay',function(){
+					musicBg.style.display = 'block';
+					musicBg.className = 'music-bg rotate';
+					musicIco.style.display = 'block';
+				},false);
+
+			}
+			window.setTimeout(controlMusic,1000)
+		};
+
+		// 点击关注我们
+		;(function(){
+			var focus = document.getElementById('focus');
+			var zoom = document.getElementById('zoom');
+			focus.addEventListener('click',function(){
+				zoom.style.display = 'block'
+			},false)
+		})()
+
+		// 首页
+		;(function(){
+			var musicP = document.getElementById('musicP');
+			var page0 = document.getElementById('page0');
+			var touch = document.getElementById('touch');
+			var aimgs = page0.getElementsByTagName('img');
+			var swiperSlides = document.getElementsByClassName('swiper-slide')[0];
+			var num = 0;
+			touch.onclick = function(){
+				num++;
+				if(num >4){
+					setTimeout(function(){
+						page0.style.display = 'none';
+						swiperSlides.id = "page1";
+					},300)
+					musicPlay();
+					return;
+				}
+				if(num == 1){
+					aimgs[0].style.display = 'none';
+					aimgs[1].style.display = 'block';
+					aimgs[2].style.display = 'block';
+					musicP.play();
+				}else{
+					musicP.play();
+					aimgs[num+1].style.display = 'block';
+				}
+				
+				
+				
+				console.log(num)
+			}
+
+		})();
+	</script>
+	<script>
+		 //分享对象
+		/*var share = {
+			'link':location.href.substring(0,location.href.lastIndexOf("/")+1),
+			'title':'快乐沃克给你发了一个“旦”',
+			'desc':'马上开抢！',
+			'imgUrl':location.href.substring(0,location.href.lastIndexOf("/")+1)+'images/s.jpg'
+		};*/
+		//微信的配置信息从html里面读取
+		wx.config({
+		    debug: false,
+		    appId: 'wx00eb909d4645321b',
+		    timestamp: 1502280115,
+		    nonceStr: 'ttkixAthpDfOUVC2',
+		    signature: 'bf3d04ffabefa2627073e3f6ab8dca7935753047',
+		    jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage']
+		});
+		wx.ready(function(){
+
+		    wx.onMenuShareTimeline({
+			    title: '分享到朋友圈',
+			    link: window.location.href,
+			    imgUrl: '',
+			    success: function () { 
+			        alert('success')
+			    },
+			    cancel: function () { 
+			        alert('fail')
+			    }
+			});
+
+			wx.onMenuShareAppMessage({
+			    title: share.title,
+			    desc: share.desc,
+			    link: window.location.href,
+			    imgUrl: '',
+			    type: '',
+			    dataUrl: '',
+			    success: function () { 
+			        alert('success')
+			    },
+			    cancel: function () { 
+			        alert('fail')
+			    }
+			});
+		});
+		wx.error(function(res){
+			//alert(res.errMsg);
+		});
+
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "//hm.baidu.com/hm.js?ce7ff5be174f9d5ce9220596aecddfa9";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+	</script>	
+	
+</body>
+</html>
